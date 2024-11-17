@@ -65,21 +65,46 @@ def readLetters(directory):
 			letters[letterRepr] = letter
 	return letters
 
-def textToGcode(letters, text, lineLength, lineSpacing, padding):
+#def textToGcode(letters, text, lineLength, lineSpacing, padding):
 	# used for fast string concatenation
-	gcodeLettersArray = []
+#	gcodeLettersArray = []
 
-	offsetX, offsetY = 0, 0
-	for char in text:
-		letter = letters[char].translated(offsetX, offsetY)
-		gcodeLettersArray.append(repr(letter))
+#	offsetX, offsetY = 0, 0
+#	for char in text:
+#		letter = letters[char].translated(offsetX, offsetY)
+#		gcodeLettersArray.append(repr(letter))
+#
+#		offsetX += letter.width + padding
+#		if offsetX >= lineLength:
+#			offsetX = 0
+#			offsetY -= lineSpacing
+#
+#	return "".join(gcodeLettersArray)
 
-		offsetX += letter.width + padding
-		if offsetX >= lineLength:
-			offsetX = 0
-			offsetY -= lineSpacing
 
-	return "".join(gcodeLettersArray)
+
+def textToGcode(letters, text, lineLength, lineSpacing, padding):
+    # Used for fast string concatenation
+    gcodeLettersArray = []
+
+    offsetX, offsetY = 0, 0
+    for char in text:
+        # Retrieve and translate the letter
+        letter = letters[char].translated(offsetX, offsetY)
+
+        # Add comments indicating where the letter starts and ends
+        gcodeLettersArray.append(f"; Letter: '{char}' starts at X={offsetX:.2f}, Y={offsetY:.2f}\n")
+        gcodeLettersArray.append("\n".join([repr(instr) for instr in letter.instructions]))
+        gcodeLettersArray.append(f"\n; Letter: '{char}' ends\n")
+
+        # Update offsets
+        offsetX += letter.width + padding
+        if offsetX >= lineLength:
+            offsetX = 0
+            offsetY -= lineSpacing
+
+    return "\n".join(gcodeLettersArray)
+
 
 
 def parseArgs(namespace):

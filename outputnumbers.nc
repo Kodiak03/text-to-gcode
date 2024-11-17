@@ -1,3 +1,5 @@
+; Letter: '0' starts at X=0.00, Y=0.00
+
 G0 X2.16 Y6.14
 G1 X3.08 Y5.89
 G1 X3.77 Y5.22
@@ -16,11 +18,31 @@ G1 X0.56 Y5.21
 G1 X1.24 Y5.89
 G1 X2.16 Y6.14
 
+; Letter: '0' ends
+
+; Letter: ' ' starts at X=7.34, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '1' starts at X=14.34, Y=0.00
+
 G0 X14.34 Y4.47
 G1 X15.18 Y4.90
 G1 X15.83 Y5.45
 G1 X16.27 Y6.03
 G1 X16.27 Y0.00
+
+; Letter: '1' ends
+
+; Letter: ' ' starts at X=19.27, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '2' starts at X=26.27, Y=0.00
 
 G0 X26.27 Y5.25
 G1 X26.60 Y5.63
@@ -37,6 +59,16 @@ G1 X27.57 Y2.06
 G1 X27.04 Y1.33
 G1 X26.34 Y0.00
 G1 X29.58 Y0.00
+
+; Letter: '2' ends
+
+; Letter: ' ' starts at X=32.63, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '3' starts at X=39.63, Y=0.00
 
 G0 X39.71 Y4.71
 G1 X39.92 Y5.31
@@ -64,10 +96,30 @@ G1 X40.19 Y0.30
 G1 X39.81 Y0.78
 G1 X39.63 Y1.41
 
+; Letter: '3' ends
+
+; Letter: ' ' starts at X=46.37, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '4' starts at X=53.37, Y=0.00
+
 G0 X56.41 Y0.00
 G1 X56.41 Y6.03
 G1 X53.37 Y2.07
 G1 X57.48 Y2.07
+
+; Letter: '4' ends
+
+; Letter: ' ' starts at X=60.48, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '5' starts at X=67.48, Y=0.00
 
 G0 X71.01 Y6.03
 G1 X67.90 Y6.03
@@ -89,6 +141,16 @@ G1 X68.63 Y-0.01
 G1 X68.08 Y0.28
 G1 X67.69 Y0.75
 G1 X67.48 Y1.40
+
+; Letter: '5' ends
+
+; Letter: ' ' starts at X=74.30, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '6' starts at X=81.30, Y=0.00
 
 G0 X84.93 Y4.78
 G1 X84.37 Y5.79
@@ -113,9 +175,29 @@ G1 X82.53 Y3.64
 G1 X81.78 Y3.19
 G1 X81.30 Y2.79
 
+; Letter: '6' ends
+
+; Letter: ' ' starts at X=88.06, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '7' starts at X=95.06, Y=0.00
+
 G0 X95.06 Y6.03
 G1 X98.87 Y6.03
 G1 X96.14 Y0.00
+
+; Letter: '7' ends
+
+; Letter: ' ' starts at X=101.87, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '8' starts at X=108.87, Y=0.00
 
 G0 X110.69 Y6.10
 G1 X111.32 Y6.01
@@ -145,6 +227,16 @@ G1 X109.56 Y5.74
 G1 X110.06 Y6.01
 G1 X110.69 Y6.10
 
+; Letter: '8' ends
+
+; Letter: ' ' starts at X=115.51, Y=0.00
+
+
+
+; Letter: ' ' ends
+
+; Letter: '9' starts at X=122.51, Y=0.00
+
 G0 X122.63 Y1.21
 G1 X123.16 Y0.23
 G1 X124.21 Y-0.11
@@ -169,3 +261,10 @@ G1 X125.16 Y2.37
 G1 X125.51 Y2.55
 G1 X126.25 Y3.19
 
+; Letter: '9' ends
+
+; Letter: ' ' starts at X=129.25, Y=0.00
+
+
+
+; Letter: ' ' ends
