@@ -97,7 +97,7 @@ def textToGcode(letters, text, lineLength, lineSpacing, padding):
             offsetX = 0
             offsetY -= lineSpacing
 
-    # Add the final M5 (pen up) to ensure it's in the final output
+    # Add the final M3 S75 (pen up) to ensure it's in the final output
     gcodeLettersArray.append("M3 S75\n")
 
     return "".join(gcodeLettersArray)
@@ -125,6 +125,58 @@ def parseArgs(namespace):
 		help="Empty space between characters")
 
 	argParser.parse_args(namespace=namespace)
+
+
+# blt Testing
+
+def modify_gcode(gcode):
+    # Split the input G-code into individual lines
+    lines = gcode.splitlines()
+    
+    # Initialize a new list to store modified lines
+    modified_gcode = []
+    
+    # Add M3 S75 at the start
+    modified_gcode.append("M3 S75")
+    
+    # Loop through each line to process the G0 and G1 commands
+    previous_command = None  # To track the previous command for transitions
+    
+    for line in lines:
+        # Check for G0 or G1 commands
+        if "G0" in line:
+            if previous_command == "G1":
+                modified_gcode.append("M3 S75")  # Add M3 S75 before G0 if transitioning from G1
+            modified_gcode.append(line)  # Add the G0 command
+            previous_command = "G0"  # Update the previous command
+        elif "G1" in line:
+            if previous_command == "G0":
+                modified_gcode.append("M3 S90")  # Add M3 S90 before G1 if transitioning from G0
+            modified_gcode.append(line)  # Add the G1 command
+            previous_command = "G1"  # Update the previous command
+    
+    # Add M3 S75 at the end
+    modified_gcode.append("M3 S75")
+    
+    # Join the modified lines into a single string and return
+    return "\n".join(modified_gcode)
+
+# Example G-code input
+gcode_input = """G0 X0.00 Y6.03
+G1 X0.00 Y1.76
+G0 X0.00 Y0.00
+G1 X0.00 Y0.00"""
+
+# Modify the G-code
+modified_gcode = modify_gcode(gcode_input)
+
+# Print the modified G-code
+print(modified_gcode)
+
+# blt end test
+
+
+
 
 def main():
 	class Args: pass
