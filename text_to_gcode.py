@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 #pylint: disable=no-member
 
@@ -65,86 +66,21 @@ def readLetters(directory):
 			letters[letterRepr] = letter
 	return letters
 
-#def textToGcode(letters, text, lineLength, lineSpacing, padding):
-	# used for fast string concatenation
-#	gcodeLettersArray = []
-
-#	offsetX, offsetY = 0, 0
-#	for char in text:
-#		letter = letters[char].translated(offsetX, offsetY)
-#		gcodeLettersArray.append(repr(letter))
-#
-#		offsetX += letter.width + padding
-#		if offsetX >= lineLength:
-#			offsetX = 0
-#			offsetY -= lineSpacing
-#
-#	return "".join(gcodeLettersArray)
-
-
-
-
-
 def textToGcode(letters, text, lineLength, lineSpacing, padding):
-    # Used for fast string concatenation
-    gcodeLettersArray = []
+	# used for fast string concatenation
+	gcodeLettersArray = []
 
-    # Add the initial M3 S75 (pen up) to ensure it's in the final output
-    gcodeLettersArray.append("M3 S75\n")
+	offsetX, offsetY = 0, 0
+	for char in text:
+		letter = letters[char].translated(offsetX, offsetY)
+		gcodeLettersArray.append(repr(letter))
 
-    offsetX, offsetY = 0, 0
+		offsetX += letter.width + padding
+		if offsetX >= lineLength:
+			offsetX = 0
+			offsetY -= lineSpacing
 
-    for char in text:
-        # Retrieve and translate the letter
-        letter = letters[char].translated(offsetX, offsetY)
-
-        # Add comments indicating where the letter starts and ends
-        gcodeLettersArray.append(f"; Letter: '{char}' starts at X={offsetX:.2f}, Y={offsetY:.2f}\n")
-        
-        for instr in letter.instructions:
-            # Skip over pen-up/pen-down commands but still add them to the G-code
-            if "M3" in repr(instr):
-                gcodeLettersArray.append(repr(instr) + "\n")
-            else:
-                gcodeLettersArray.append(repr(instr) + "\n")
-
-        gcodeLettersArray.append(f"\n; Letter: '{char}' ends\n")
-
-        # Update offsets
-        offsetX += letter.width + padding
-        if offsetX >= lineLength:
-            offsetX = 0
-            offsetY -= lineSpacing
-
-    # Add the final M5 (pen up) to ensure it's in the final output
-    gcodeLettersArray.append("M3 S75\n")
-
-    return "".join(gcodeLettersArray)
-
-
-
-
-#def textToGcode(letters, text, lineLength, lineSpacing, padding):
-    # Used for fast string concatenation
-#    gcodeLettersArray = []
-
-#    offsetX, offsetY = 0, 0
- #   for char in text:
-  #      # Retrieve and translate the letter
-   #     letter = letters[char].translated(offsetX, offsetY)
-
-        # Add comments indicating where the letter starts and ends
-    #    gcodeLettersArray.append(f"; Letter: '{char}' starts at X={offsetX:.2f}, Y={offsetY:.2f}\n")
-     #   gcodeLettersArray.append("\n".join([repr(instr) for instr in letter.instructions]))
-      #  gcodeLettersArray.append(f"\n; Letter: '{char}' ends\n")
-#
- #       # Update offsets
-  ##     if offsetX >= lineLength:
-    #        offsetX = 0
-     #       offsetY -= lineSpacing
-#
- #   return "\n".join(gcodeLettersArray)
-
+	return "".join(gcodeLettersArray)
 
 
 def parseArgs(namespace):
