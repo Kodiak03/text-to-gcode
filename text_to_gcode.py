@@ -83,11 +83,7 @@ def textToGcode(letters, text, lineLength, lineSpacing, padding):
         gcodeLettersArray.append(f"; Letter: '{char}' starts at X={offsetX:.2f}, Y={offsetY:.2f}\n")
         
         for instr in letter.instructions:
-            # Skip over pen-up/pen-down commands but still add them to the G-code
-            if "M3" in repr(instr):
-                gcodeLettersArray.append(repr(instr) + "\n")
-            else:
-                gcodeLettersArray.append(repr(instr) + "\n")
+            gcodeLettersArray.append(repr(instr) + "\n")
 
         gcodeLettersArray.append(f"\n; Letter: '{char}' ends\n")
 
@@ -100,7 +96,8 @@ def textToGcode(letters, text, lineLength, lineSpacing, padding):
     # Add the final M3 S75 (pen up) to ensure it's in the final output
     gcodeLettersArray.append("M3 S75\n")
 
-    return "".join(gcodeLettersArray)
+    # Post-process the G-code
+    return postProcessGcode("".join(gcodeLettersArray))
 
 
 
@@ -128,6 +125,29 @@ def parseArgs(namespace):
 
 
 # blt Testing
+
+def postProcessGcode(gcode):
+    # Split the input G-code into individual lines
+    lines = gcode.splitlines()
+    
+    # Initialize a new list to store modified lines
+    modified_gcode = []
+    
+    for line in lines:
+        # Add M3 S75 before G0 commands
+        if line.startswith("G0"):
+            modified_gcode.append("M3 S75")
+            modified_gcode.append(line)
+            modified_gcode.append("M3 S90")  # Add M3 S90 AFTER every G0 command
+        else:
+            modified_gcode.append(line)
+
+    # Add M3 S75 at the end
+    modified_gcode.append("M3 S75")
+    
+    # Join the modified lines into a single string and return
+    return "\n".join(modified_gcode)
+
 
 def modify_gcode(gcode):
     # Split the input G-code into individual lines
@@ -175,17 +195,14 @@ print(modified_gcode)
 
 # blt end test
 
-
-
-
 def main():
-	class Args: pass
-	parseArgs(Args)
+    class Args: pass
+    parseArgs(Args)
 
-	letters = readLetters(Args.gcode_directory)
-	data = Args.input.read()
-	gcode = textToGcode(letters, data, Args.line_length, Args.line_spacing, Args.padding)
-	Args.output.write(gcode)
+    letters = readLetters(Args.gcode_directory)
+    data = Args.input.read()
+    gcode = textToGcode(letters, data, Args.line_length, Args.line_spacing, Args.padding)
+    Args.output.write(gcode)
 
 
 if __name__ == '__main__':
